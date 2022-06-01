@@ -1,0 +1,40 @@
+* {
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: bold;
+}
+
+.wrap {
+  width: 900px;
+  margin: auto;
+}
+
+.lead {
+  margin-top: 10px;
+  font-size: 17px;
+}
+
+.card-text {
+  margin-top: 5px;
+  font-size: 15px;
+}
+
+.card-comment {
+  color: blue;
+  font-size: 13px;
+}
+
+.btn {
+  font-size: 18px;
+}
+
+.form {
+  border: 4px solid black;
+  border-radius: 8px;
+  width: 500px;
+  padding: 30px 50px;
+  margin: 0px auto 30px auto;
+}
+
+.form .btn {
+  font-size: 14px;
+}
