@@ -38,6 +38,21 @@
 
     <!-- js -->
     <script>
+      $(function () {
+        $(".exchange_rate__btn").empty();
+        $.ajax({
+          type: "GET",
+          url: "http://spartacodingclub.shop/sparta_api/rate",
+          data: {},
+          success: function (response) {
+            let rate = response["rate"];
+            console.log(rate);
+
+            $(".exchange_rate").append(`<span>: ${rate}</span>`);
+          },
+        });
+      });
+
       function handleClick() {
         alert("주문이 완료되었습니다.");
       }
@@ -62,17 +77,29 @@
       .product_info {
         margin: 20px 0px;
       }
+      .product_info__head {
+        height: 40px;
+      }
       .product_info__title {
         font-size: 20px;
         padding: 0px 3px;
+        text-align: center;
       }
       .product_info__price {
         font-size: 13px;
       }
+
       .product_info__description {
         display: flex;
         font-size: 12px;
         margin-top: 5px;
+      }
+      .exchange_rate {
+        margin-top: 7px;
+        display: flex;
+        font-size: 13px;
+        color: blue;
+        font-weight: bold;
       }
 
       .order_info .col-auto {
@@ -103,23 +130,40 @@
         margin-top: 10px;
         margin-bottom: 50px;
       }
+
+      .div-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 10px;
+        flex: 0 0 auto;
+        margin-top: 10px;
+        border-bottom: 1px solid rgba(55, 53, 47, 0.2);
+      }
     </style>
   </head>
 
   <body>
     <div class="main">
       <div class="product_img">
-        <img src="/images/eva_t.jpg" />
+        <img src="../images/eva_t.jpg" />
       </div>
 
+      <div class="div-line"></div>
+
       <div class="product_info">
-        <span class="product_info__title">에반게리온 티셔츠(레이)</span>
-        <span class="product_info__price">가격 : 15,000원/개</span>
+        <div class="product_info__head">
+          <span class="product_info__title">에반게리온 티셔츠(레이)</span>
+          <span class="product_info__price">가격 : 15,000원/개</span>
+        </div>
+
         <span class="product_info__description"
           >1995년 일본에서 방영한 '신세기 에반게리온'의 콜라보 제품입니다<br />에반게리온
           0호기 전속 파일럿인 아야나미 레이의 슈트폼을 티셔츠로 다시 한번
           느껴보세요.
         </span>
+        <span class="exchange_rate">달러-원 환율</span>
       </div>
 
       <div class="order_info">

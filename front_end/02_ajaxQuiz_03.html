@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JQuery 연습하고 가기!</title>
+    <!-- JQuery를 import 합니다 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <style type="text/css">
+      div.question-box {
+        margin: 10px 0 20px 0;
+      }
+      div.question-box > div {
+        margin-top: 30px;
+      }
+      #img-dog {
+        width: 420px;
+        height: 400px;
+      }
+      .dog-info {
+        font-size: 25px;
+        border: 2px solid black;
+        width: 400px;
+        padding: 10px 10px;
+        margin-bottom: 10px;
+      }
+    </style>
+
+    <script>
+      function q1() {
+        $(".dog-info").empty();
+        $.ajax({
+          type: "GET",
+          url: "https://api.thedogapi.com/v1/images/search",
+          data: {},
+          success: function (response) {
+            let dog_url = response[0]["url"];
+            if (response[0]["breeds"] != "") {
+              let dog_name = response[0]["breeds"][0]["name"];
+              temp_html = `<span>dog name : ${dog_name}</span>`;
+              $(".dog-info").append(temp_html);
+              $("#img-dog").attr("src", dog_url);
+            } else {
+              $(".dog-info").append("<span>dog name : unknown</span>");
+              $("#img-dog").attr("src", dog_url);
+            }
+          },
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <h1>JQuery+Ajax의 조합을 연습하자!</h1>
+
+    <hr />
+
+    <div class="question-box">
+      <h2>3. 랜덤 강아지 사진 API를 이용하기</h2>
+      <p>예쁜 강아지 사진을 보여주세요</p>
+      <p>업데이트 버튼을 누를 때마다 지웠다 새로 씌여져야 합니다.</p>
+      <button onclick="q1()">강아지를 보자</button>
+      <div>
+        <div class="dog-info">dog name :</div>
+        <img
+          id="img-dog"
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdT0Ljx%2FbtrD5SQwRm5%2F6ANTPSI7E1fzcMInl2Wl90%2Fimg.jpg"
+        />
+      </div>
+    </div>
+  </body>
+</html>
