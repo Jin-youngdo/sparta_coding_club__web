@@ -8,7 +8,7 @@ db = client.dbsparta
 
 # 데이터 삽입 : insert() 예제
 # doc = {"name":"jane", "age":"21"}
-# db의 users collection(==table?)에  doc(딕셔너리형 데이터) 삽입
+# db의 users collection(==table)에  doc(딕셔너리형 데이터) 삽입
 # db.users.insert_one(doc)
 
 # 데이터 탐색 : find() 예제
@@ -30,4 +30,4 @@ db = client.dbsparta
 
 # 데이터 삭제 : delete() 예제
 # delete_one() : 해당 조건에 부합 하는 데이터 한개 삭제
-db.users.delete_one({'name': 'bobby'})
+# db.users.delete_one({'name': 'bobby'})

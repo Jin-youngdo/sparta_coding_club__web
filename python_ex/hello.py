@@ -22,9 +22,9 @@ for tr in trs:
         movie_score = tr.select_one('td.point').text
         movie_title = a_tag.text
 
-        print("[" + movie_rating + "] " + movie_title + " | " + movie_score)
-        doc = {'title': movie_title,
-               'rating': movie_rating,
-               'score': movie_score}
-        db.movies_02.insert_one(doc)
+        print("[" + movie_rating + "] " + movie_title + " ★ : " + movie_score)
+        # doc = {'title': movie_title,
+        #        'rating': movie_rating,
+        #        'score': movie_score}
+        # db.movies_02.insert_one(doc)
 
