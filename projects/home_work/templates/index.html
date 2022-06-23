@@ -8,6 +8,9 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
+    <!-- shortcut icon -->
+    <link rel="shortcut icon" href="../static/shop.png" />
+
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -36,6 +39,9 @@
       rel="stylesheet"
     />
 
+    <!-- css -->>
+    <link rel="stylesheet" href="../static/index.css"></link>
+
     <!-- js -->
     <script>
       $(function () {
@@ -46,108 +52,86 @@
           data: {},
           success: function (response) {
             let rate = response["rate"];
-            console.log(rate);
 
             $(".exchange_rate").append(`<span>: ${rate}</span>`);
           },
         });
+
+        showOrders()
       });
 
-      function handleClick() {
-        alert("주문이 완료되었습니다.");
+      function showOrders(){
+        $.ajax({
+          type: "GET",
+          url: "/orderInfo",
+          data: {},
+          success: function(response){
+            let orders = response['all_orders'];
+            for(let i=0; i<orders.length; i++){
+              let order_name = orders[i]["order_name"];
+              let order_amount = orders[i]["order_amount"];
+              let order_address = orders[i]["order_address"];
+              let order_phone = orders[i]["order_phone"];
+
+              let temp_html = `<tr>
+                                <td>${order_name}</td>
+                                <td>${order_amount}</td>
+                                <td>${order_address}</td>
+                                <td>${order_phone}
+                                  <button type="button"
+                                          class="delete-btn btn btn-danger"
+                                          data-name="${order_name}"
+                                          data-amount="${order_amount}"
+                                          onclick="deleteOrder(this)">X</button>
+                                </td>
+                              </tr>`;
+              
+              $(".orders_table").append(temp_html);
+            }
+          }
+        })
+      }
+
+      function addOrders(){
+        let name = $(".order-name").val();
+        let amount = $(".order-amount").val();
+        let adreess = $(".order-address").val();
+        let phone = $(".order-phone").val();
+        $.ajax({
+            type : 'post',
+            url : '/orderInfo',
+            data : {name_give: name, amount_give: amount,
+                   address_give: adreess, phone_give: phone },
+            success: function(response){
+                alert(response["msg"]);
+                window.location.reload()  // 페이지 새로 고침
+            }
+        })
+      }
+
+      function deleteOrder(response){
+        let data = $(response)[0].dataset;
+        let name = data.name;
+        let amount = data.amount;
+        $.ajax({
+            type : 'post',
+            url : '/delete',
+            data : {order_name : name, order_amount : amount},
+            success: function(response){
+                alert(response["msg"]);
+                window.location.reload()  // 페이지 새로 고침
+            }
+        })
       }
     </script>
 
-    <title>스파르타코딩클럽 | 1주차 숙제</title>
-    <style>
-      * {
-        font-family: "Open Sans", sans-serif;
-        font-weight: bold;
-      }
-      .main {
-        width: 400px;
-        margin: auto;
-      }
-
-      .product_img img {
-        margin-top: 50px;
-        width: 400px;
-        height: 300px;
-      }
-      .product_info {
-        margin: 20px 0px;
-      }
-      .product_info__head {
-        height: 40px;
-      }
-      .product_info__title {
-        font-size: 20px;
-        padding: 0px 3px;
-        text-align: center;
-      }
-      .product_info__price {
-        font-size: 13px;
-      }
-
-      .product_info__description {
-        display: flex;
-        font-size: 12px;
-        margin-top: 5px;
-      }
-      .exchange_rate {
-        margin-top: 7px;
-        display: flex;
-        font-size: 13px;
-        color: blue;
-        font-weight: bold;
-      }
-
-      .order_info .col-auto {
-        width: 400px;
-        font-size: 10px;
-        padding: 0px;
-      }
-
-      .input-group-text {
-        font-size: 10px;
-        font-weight: bold;
-        padding: 0px 12px;
-      }
-      #inlineFormCustomSelect {
-        font-size: 8px;
-        color: rgba(0, 0, 0, 0.4);
-      }
-      #custom-option_select {
-        display: flex;
-        align-items: center;
-        text-align: center;
-      }
-
-      .btn {
-        display: flex;
-        font-size: 10px;
-        margin: auto;
-        margin-top: 10px;
-        margin-bottom: 50px;
-      }
-
-      .div-line {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 10px;
-        flex: 0 0 auto;
-        margin-top: 10px;
-        border-bottom: 1px solid rgba(55, 53, 47, 0.2);
-      }
-    </style>
+    <title>나홀로 쇼핑몰</title>
   </head>
 
   <body>
     <div class="main">
       <div class="product_img">
-        <img src="../images/eva_t.jpg" />
+        <img src="../static/eva_t.jpg" />
       </div>
 
       <div class="div-line"></div>
@@ -168,60 +152,72 @@
 
       <div class="order_info">
         <div class="col-auto">
-          <label class="sr-only" for="inlineFormInputGroup">Username</label>
           <div class="input-group mb-2">
             <div class="input-group-prepend">
               <div class="input-group-text">주문자이름</div>
             </div>
-            <input type="text" class="form-control" id="inlineFormInputGroup" />
+            <input type="text" class="form-control order-name" id="inlineFormInputGroup" />
           </div>
         </div>
 
         <div class="col-auto">
-          <label class="sr-only" for="inlineFormInputGroup">Username</label>
           <div class="input-group mb-2">
             <div class="input-group-prepend">
               <div class="input-group-text">수량</div>
             </div>
-            <select class="custom-select" id="inlineFormCustomSelect">
+            <select class="custom-select order-amount" id="inlineFormCustomSelect">
               <option id="custom-option_select" selected>
                 --------------- 수량을 선택하세요 ---------------
               </option>
               <option value="1">1</option>
-              <option value="2">5</option>
-              <option value="3">10</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
             </select>
           </div>
         </div>
 
         <div class="col-auto">
-          <label class="sr-only" for="inlineFormInputGroup">Username</label>
           <div class="input-group mb-2">
             <div class="input-group-prepend">
               <div class="input-group-text">주소</div>
             </div>
-            <input type="text" class="form-control" id="inlineFormInputGroup" />
+            <input type="text" class="form-control order-address" id="inlineFormInputGroup" />
           </div>
         </div>
 
         <div class="col-auto">
-          <label class="sr-only" for="inlineFormInputGroup">Username</label>
           <div class="input-group mb-2">
             <div class="input-group-prepend">
               <div class="input-group-text">전화번호</div>
             </div>
             <input
-              type="number"
-              class="form-control"
+              type="text"
+              class="form-control order-phone"
               id="inlineFormInputGroup"
             />
           </div>
         </div>
       </div>
 
-      <button type="button" class="btn btn-primary" onclick="handleClick()">
+      <button type="button" class="btn btn-primary" onclick="addOrders()">
         주문하기
       </button>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">이름</th>
+            <th scope="col">수량</th>
+            <th scope="col">주소</th>
+            <th scope="col">전화번호</th>
+          </tr>
+        </thead>
+        <tbody class="orders_table">
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

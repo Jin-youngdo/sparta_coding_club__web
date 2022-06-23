@@ -1,0 +1,112 @@
+* {
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+}
+
+.main {
+  width: 400px;
+  margin: auto;
+}
+
+.product_img img {
+  margin-top: 50px;
+  width: 400px;
+  height: 300px;
+}
+.product_info {
+  margin: 20px 0px;
+}
+.product_info__head {
+  height: 40px;
+}
+.product_info__title {
+  font-size: 20px;
+  padding: 0px 3px;
+  text-align: center;
+}
+.product_info__price {
+  font-size: 13px;
+}
+
+.product_info__description {
+  display: flex;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.exchange_rate {
+  margin-top: 7px;
+  display: flex;
+  font-size: 13px;
+  color: blue;
+  font-weight: bold;
+}
+
+.order_info .col-auto {
+  width: 400px;
+  font-size: 10px;
+  padding: 0px;
+}
+
+.input-group-text {
+  font-size: 10px;
+  font-weight: bold;
+  padding: 0px 12px;
+}
+#inlineFormCustomSelect {
+  font-size: 8px;
+  color: rgba(0, 0, 0, 0.4);
+}
+#custom-option_select {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.order-name,
+.order-amount,
+.order-address,
+.order-phone {
+  height: 38px;
+  font-size: 10px;
+}
+
+.btn {
+  display: flex;
+  font-size: 10px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.div-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 10px;
+  flex: 0 0 auto;
+  margin-top: 10px;
+  border-bottom: 1px solid rgba(55, 53, 47, 0.2);
+}
+
+.table thead {
+  font-size: 14px;
+  text-align: center;
+}
+
+.table tbody {
+  font-size: 10px;
+  text-align: center;
+}
+
+.table tbody td {
+  vertical-align: middle;
+}
+
+.delete-btn {
+  display: inline-flex;
+  padding: 3px 6px;
+  margin: 0px;
+  margin-left: 10px;
+  margin-right: -15px;
+}
