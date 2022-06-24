@@ -39,7 +39,7 @@
       rel="stylesheet"
     />
 
-    <!-- css -->>
+    <!-- css -->
     <link rel="stylesheet" href="../static/index.css"></link>
 
     <!-- js -->
@@ -59,6 +59,12 @@
 
         showOrders()
       });
+
+      function handleRemove(response){
+        if(confirm("정말 삭제하시겠습니까?")){
+          deleteOrder($(response));
+        } else{ false; }
+      }
 
       function showOrders(){
         $.ajax({
@@ -82,7 +88,7 @@
                                           class="delete-btn btn btn-danger"
                                           data-name="${order_name}"
                                           data-amount="${order_amount}"
-                                          onclick="deleteOrder(this)">X</button>
+                                          onclick="handleRemove(this)">X</button>
                                 </td>
                               </tr>`;
               

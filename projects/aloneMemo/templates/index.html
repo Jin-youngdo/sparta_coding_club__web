@@ -43,18 +43,14 @@
     <script>
       $(document).ready(function(){
         showArticle();
-        handleCommenting();
       });
 
-      function handleCommenting(){
-        $(".post-comment").on('keyup', function(){
-          $(".comment_count").html("(" + $(this).val().length + " / 24" + ")");
-
-          if($(this).val().length > 24){
-            $(this).val($(this).val().substring(0, 24));
-            $(".comment_count").html("(24 / 24)");
-          }
-        })
+      function handleCommenting(response){
+        $(".comment_count").html("(" + $(response).val().length + " / 24" + ")");
+        if($(response).val().length > 24){
+          $(response).val($(response).val().substring(0, 24));
+          $(".comment_count").html("(24 / 24)");
+        }
       }
 
       function handlePosting(){
@@ -68,6 +64,14 @@
         }
       }
 
+      function handleRemove(response){
+        if(confirm("정말 삭제하시겠습니까?")){
+          deleteArticle($(response));
+        } else{
+          false;
+        }
+      };
+      
       function deleteArticle(response){
         let data = $(response)[0].dataset;
         let title = data.title;
@@ -125,8 +129,8 @@
                                 <button type="button"
                                         class="article-btn btn btn-danger" 
                                         data-title="${title}"
-                                        data-comment="${comment}" 
-                                        onclick="deleteArticle(this)">삭제</button>
+                                        data-comment="${comment}"
+                                        onclick="handleRemove(this)">삭제</button>
                               </div>`;
               
               $(".card-columns").append(temp_html);
@@ -163,7 +167,10 @@
 
         <div class="form-group">
           <label for="exampleFormControlTextarea1">간단 코멘트</label>
-          <textarea class="form-control post-comment" id="exampleFormControlTextarea1" rows="1"></textarea>
+          <textarea class="form-control post-comment" 
+                    id="exampleFormControlTextarea1"
+                    rows="1"
+                    onkeyup="handleCommenting(this)"></textarea>
           <div class="comment_count">(0 / 24)</div>
         </div>
 
